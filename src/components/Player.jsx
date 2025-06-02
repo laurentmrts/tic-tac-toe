@@ -16,7 +16,7 @@ export default function Player({initialName, symbol}) {
   let btnCaption = 'Edit';
 
   if (isEditing) {
-    editablePlayerName = <input type="text" required value={playerName} onChange={handleChange} />
+    editablePlayerName = <input type="text" required value={playerName} onChange={handleChange} /> // Two Way Binding ici
     btnCaption = 'Save';
   }
 
