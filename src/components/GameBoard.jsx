@@ -6,16 +6,18 @@ const initialGameBoard = [
   [null, null, null],
 ];
 
-export default function GameBoard() {
+export default function GameBoard({onSelectSquare, activePlayerSymbol}) {
   const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
   function handleSelectSquare(rowIndex, columnIndex) {
     // changement du state de facon immuable/immutable en utilisant un nouveau pointeur
     setGameBoard((prevGameBoard) => {
       const updatedGameBoard = [...prevGameBoard.map(innerArray => [...innerArray])];
-      updatedGameBoard[rowIndex][columnIndex] = 'X';
+      updatedGameBoard[rowIndex][columnIndex] = activePlayerSymbol;
       return updatedGameBoard;
     });
+
+    onSelectSquare(); //executed here
   }
 
   return (
