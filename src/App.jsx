@@ -20,10 +20,6 @@ function deriveActivePlayer(gameTurns) {
 }
 
 function App() {
-  const [players, setPlayers] = useState([{
-    'X' : 'Player 1',
-    'O' : 'Player 2'
-  }])
   const [gameTurns, setGameTurns] = useState([]);
 
   const activePlayer = deriveActivePlayer(gameTurns);
@@ -44,7 +40,7 @@ function App() {
     if (firstSquareSymbol &&
       firstSquareSymbol === secondSquareSymbol &&
       secondSquareSymbol === thirdSquareSymbol) {
-      winner = players[firstSquareSymbol]; // data stockee dans une map
+      winner = firstSquareSymbol;
     }
   }
 
@@ -66,41 +62,20 @@ function App() {
     setGameTurns([]);
   }
 
-  function handlePlayerName(symbol, newName) {
-    setPlayers(prevPlayers => {
-      return {
-        ...prevPlayers,
-        [symbol]: newName // synthawe JS -> ici on set la properties dynamiquement
-      }
-    })
-  }
-
-  return (
-    <main>
-      <div id="game-container">
-        <ol id="players" className="highlight-player">
-          <Player
-            initialName='Player 1'
-            symbol='X'
-            isActive={activePlayer === 'X'}
-            onChangeName={handlePlayerName}
-          />
-          <Player
-            initialName='Player 2'
-            symbol='O'
-            isActive={activePlayer === 'O'}
-          />
-        </ol>
-        { (winner || hasDraw) && <GameOver winner={winner} onRestart={handleRematch}/>}
-        <GameBoard
-          onSelectSquare={handleSelectSquare}
-          board={gameBoard}
-          onChangeName={handlePlayerName}
-        />
-      </div>
-      <Log turns={gameTurns} />
-    </main>
-  );
+  return <main>
+    <div id="game-container">
+      <ol id="players" className="highlight-player">
+        <Player initialName='Player 1' symbol='X' isActive={activePlayer === 'X'}/>
+        <Player initialName='Player 2' symbol='O' isActive={activePlayer === 'O'}/>
+      </ol>
+      { (winner || hasDraw) && <GameOver winner={winner} onRestart={handleRematch}/>}
+      <GameBoard
+        onSelectSquare={handleSelectSquare}
+        board={gameBoard}
+      />
+    </div>
+    <Log turns={gameTurns} />
+  </main>;
 }
 
 export default App

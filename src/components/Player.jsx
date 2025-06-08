@@ -1,15 +1,11 @@
 import {useState} from "react";
 
-export default function Player({initialName, symbol, isActive, onChangeName}) {
+export default function Player({initialName, symbol, isActive}) {
   const [isEditing, setIsEditing] = useState(false);
   const [playerName, setPlayerName] = useState(initialName);
 
   function handleEditClick() {
     setIsEditing((prevState) => !prevState);
-
-    if (isEditing) {
-      onChangeName(symbol, playerName);
-    }
   }
 
   function handleChange(event) {
@@ -20,9 +16,7 @@ export default function Player({initialName, symbol, isActive, onChangeName}) {
   let btnCaption = 'Edit';
 
   if (isEditing) {
-    editablePlayerName = (
-      <input type="text" required value={playerName} onChange={handleChange} />
-    ); // Two Way Binding ici
+    editablePlayerName = <input type="text" required value={playerName} onChange={handleChange} /> // Two Way Binding ici
     btnCaption = 'Save';
   }
 
@@ -32,7 +26,7 @@ export default function Player({initialName, symbol, isActive, onChangeName}) {
         {editablePlayerName}
         <span className='player-symbol'>{symbol}</span>
       </span>
-      <button onClick={handleEditClick}>{btnCaption}</button>
+      <button onClick={() => handleEditClick()}>{btnCaption}</button>
     </li>
   );
 }
